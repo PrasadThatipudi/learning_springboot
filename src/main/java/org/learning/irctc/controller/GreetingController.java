@@ -5,7 +5,7 @@ import org.learning.annotation.RestController;
 
 @RestController("/test")
 public class GreetingController {
-    @GetMapping("/greeting")
+    @GetMapping("/greet")
     public String greet() {
         return "Hello, welcome to IRCTC!";
     }
