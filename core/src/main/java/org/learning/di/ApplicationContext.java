@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ApplicationContext {
     private final HashMap<String, Object> cache;
@@ -35,7 +36,12 @@ public class ApplicationContext {
     }
 
     private void runAutoConfigurations (Collection<Object> beans) {
-        beans.stream().filter(clz -> clz.getClass().isAnnotationPresent(AutoConfigurator.class)).forEach(clz -> runAutoConfiguration(clz, beans));
+        Stream<Object> objectStream = beans.stream().filter(clz -> clz.getClass()
+                .isAnnotationPresent(AutoConfigurator.class));
+
+        for (Object clz : objectStream.collect(Collectors.toList())) {
+             runAutoConfiguration(clz, beans);
+        }
     }
 
     private void runAutoConfiguration(Object clz, Collection<Object> beans) {

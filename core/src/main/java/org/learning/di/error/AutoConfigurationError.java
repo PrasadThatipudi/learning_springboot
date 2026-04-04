@@ -20,7 +20,11 @@ public class AutoConfigurationError extends RuntimeException {
     }
 
     public static AutoConfigurationError errorWhileInvokingConfigureMethod(Object clz, Method configureMethod, Throwable throwable) {
-        String message = String.format("Error while invoking configure method %s of class %s", configureMethod.getName(), clz.getClass().getName());
+        String message = String.format("Error while invoking configure method %s of class %s\nError: %s",
+                configureMethod.getName(),
+                clz.getClass().getName(),
+                throwable.getMessage()
+        );
         return new AutoConfigurationError(message);
     }
 }
